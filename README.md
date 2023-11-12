@@ -1,123 +1,112 @@
-<p align="left"><img src="https://cdn-images-1.medium.com/max/184/1*2GDcaeYIx_bQAZLxWM4PsQ@2x.png"></p>
+### :raising_hand: **BiciMAD Planner** 
+This pipeline's goal is to  help you navigate through Madrid's MADness with one of the best transport options available for tourism, BiciMAD bicicles.
 
-# __ih_datamadpt0923_project_m1__
+### :baby: **Status**
+Alpha
 
-Ironhack Madrid - Data Analytics Part Time - Sep 2023 - Project Module 1
+### :running: **One-liner**
+With this pipeline you will be able to locate the **nearest BiciMAD station** from any **monument**.
 
-## **Data:**
-
-There are 2 main datasources:
-
-- **CSV Files.** The datasets contains information from the BiciMAD stations including their location (i.e.: latitude / longitude). You may find the `.csv` files in the __data__ folder.
-
-- **API REST.** We will use the API REST from the [Portal de datos abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/nuevoMadrid/swagger-ui-master-2.2.10/dist/index.html?url=/egobfiles/api.datos.madrid.es.json#/), where you can find the __Catálogo de datos__ with more than 70 datasets. The API endpoint is `https://datos.madrid.es/egob`. 
-
-> __IMPORTANT:__ These are the body corresponding to every dataset:
-
-- Alana: `/catalogo/209426-0-templos-catolicas.json`
-
-- Alberto: `/catalogo/209434-0-templos-otros.json`
-
-- Ana: `/catalogo/202162-0-instalaciones-accesibles-municip.json`
-
-- Andrew: `/catalogo/202180-0-instalaciones-accesibles-no-muni.json`
-
-- Carlos: `/catalogo/202311-0-colegios-publicos.json`
-
-- Elena: `/catalogo/203166-0-universidades-educacion.json`
-
-- Guille: `/catalogo/200215-0-instalaciones-deportivas.json`
-
-- John: `/catalogo/200304-0-centros-culturales.json`
-
-- Natalia: `/catalogo/201000-0-embajadas-consulados.json`
-
-- Rodrigo: `/catalogo/300356-0-monumentos-ciudad-madrid.json`
-
-- Sil: `/catalogo/208844-0-monumentos-edificios.json`
-
-- Silvia: `/catalogo/300614-0-centros-educativos.json`
-
-- Tere: `/catalogo/200761-0-parques-jardines.json`
-
-- Tomás: `/catalogo/212808-0-espacio-deporte.json`
-
-
+![Image](https://upload.wikimedia.org/wikipedia/commons/c/cf/Cincinnati_Bike_Maps_04.jpg)
 
 ---
 
-## **Main Challenge:**
+## **Formatting**
+Your readers will most likely view your README in a browser so please keep that in mind when formatting its content: 
+- Use proper format when necesary (e.g.: `import pandas as pd`). 
+- Categorize content using two or three levels of header beneath. 
+- Make use of **emphasis** to call out important words. 
+- Link to project pages for related libraries you mention. Link to Wikipedia, Wiktionary, even Urban Dictionary definitions for words of which a reader may not be familiar. Make amusing cultural references. 
+- Add links to related projects or services. 
 
-You must create a Python App (**Data Pipeline**) that allow their potential users to find the nearest BiciMAD station to a set of places of interest using the methods included in the module `geo_calculations.py`. The output table should look similar to:
-
-| Place of interest | Type of place (*) | Place address | BiciMAD station | Station location |
-|---------|----------|-------|------------|----------|
-| Auditorio Carmen Laforet (Ciudad Lineal)   | Centros Culturales | Calle Jazmin, 46 | Legazpi | Calle Bolívar, 3 |
-| Centro Comunitario Casino de la Reina | Centros municipales de enseñanzas artísticas | Calle Casino, 3 | Chamartin | Calle Rodríguez Jaén, 40 |
-| ...     | ...            | ...        | ...      | ...        |
-> __(*)__ This correspond to the type of place assigned to you. 
-
-
-**Your project must meet the following requirements:**
-
-- It must be contained in a GitHub repository which includes a README file that explains the aim and content of your code. You may follow the structure suggested [here](https://github.com/potacho/data-project-template).
-
-- __It must create, at least, a `.csv` file including the requested table (i.e. Main Challenge).__ Alternatively, you may create an image, pdf, plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
-
-- It must provide, at least, two options for the final user to select when executing using `argparse`: **(1)** To get the table for every 'Place of interest' included in the dataset (or a set of them), **(2)** To get the table for a specific 'Place of interest' imputed by the user.
+> Here you have a markdown cheatsheet [Link](https://commonmark.org/help/) and tutorial [Link](https://commonmark.org/help/tutorial/).
 
 
-**Additionally:**
+## **Start writing ASAP:**
+*Last but not least, by writing your README soon you give yourself some pretty significant advantages. Most importantly, you’re giving yourself a chance to think through the project without the overhead of having to change code every time you change your mind about how something should be organized or what should be included.*
 
-- You must prepare a 4 minutes presentation (ppt, canva, etc.) to explain your project (Instructors will provide further details about the content of the presentation).
 
-- The last slide of your presentation must include your candidate for the **'Ironhack Data Code Beauty Pageant'**. 
+## **Suggested Structure:**
 
+### :raising_hand: **Name** 
+Self-explanatory names are best. If the name sounds too vague or unrelated, it may be a signal to move on. It also must be catchy. Images, Logo, Gif or some color is strongly recommended.
+
+### :baby: **Status**
+Alpha, Beta, 1.1, Ironhack Data Analytics Final Project, etc... It's OK to write a sentence, too. The goal is to let interested people know where this project is at.
+
+### :running: **One-liner**
+Having a one-liner that describes the pipeline/api/app is useful for getting an idea of what your code does in slightly greater detail. 
+
+### :computer: **Technology stack**
+Python, Pandas, Scipy, Scikit-learn, etc. Indicate the technological nature of the software, including primary programming language(s), main libraries and whether the software is intended as standalone or as a module in a framework or other ecosystem.
+
+### :boom: **Core technical concepts and inspiration**
+Why does it exist? Frame your project for the potential user. Compare/contrast your project with other, similar projects so the user knows how it is different from those projects. Highlight the technical concepts that your project demonstrates or supports. Keep it very brief.
+
+### :wrench: **Configuration**
+Requeriments, prerequisites, dependencies, installation instructions.
+
+### :see_no_evil: **Usage**
+Parameters, return values, known issues, thrown errors.
+
+### :file_folder: **Folder structure**
+```
+└── project
+    ├── __trash__
+    ├── .gitignore
+    ├── .env
+    ├── requeriments.txt
+    ├── README.md
+    ├── main_script.py
+    ├── notebooks
+    │   ├── notebook1.ipynb
+    │   └── notebook2.ipynb
+    ├── package1
+    │   ├── module1.py
+    │   └── module2.py
+    └── data
+        ├── raw
+        ├── processed
+        └── results
+```
+
+> Do not forget to include `__trash__` and `.env` in `.gitignore` 
+
+### :shit: **ToDo**
+Next steps, features planned, known bugs (shortlist).
+
+### :information_source: **Further info**
+Credits, alternatives, references, license.
+
+### :love_letter: **Contact info**
+Getting help, getting involved, hire me please.
 
 ---
 
-### **Bonus 1:**
+> Here you have some repo examples:
 
-You may include in your table the availability of bikes in each station.
+- [Spotify Recommender](https://github.com/a-fp/Final_Project)
 
----
+- [Political Spanish Sentiment](https://github.com/ssarahreyes/political_spanish_sentiment)
+- [Face-Mask Detection](https://github.com/marinafdezban/final_project)
 
-### **Bonus 2:**
+- [Data Town](https://github.com/carpiero/DataTown)
+- [Show us your Panerai Watch!](https://github.com/Pvillamanario/Panerai_or_not_Ironhack_final_project)
 
-You may improve the usability of your app by using [FuzzyWuzzy](https://pypi.org/project/fuzzywuzzy/).
+- [Onegy](https://github.com/borjauria/Final-Project)
+- [Yummest](https://github.com/almsasantos/Yummest_Food_App)
+- [Math handwritting recognition](https://github.com/yaakx/Math_handwritting_recognition)
+- [HackDecó](https://github.com/herreradelduque/Ironhack-Final-Project---HackDeco)
 
----
+- [E-VITALOS](https://github.com/marinapm90/E-vitalos)
+- [Movie Founder](https://github.com/Alfagu/final-project-Ironhack-0419mad)
 
-### **Bonus 3:**
+- [MMELT](https://github.com/Juanjopf19/Ironhack-final-project--MMELT) 
+- [Mamba (OCR-Translator-Assistant)](https://github.com/YonatanRA/OCR-translator-assistant-project)
+- [Art Classification](https://github.com/serguma/art_classification)
 
-Feel free to enrich your output data with any data you may find relevant (e.g.: wiki info for every place of interest) or connect to the [BiciMAD API](https://mobilitylabs.emtmadrid.es/) and update bikes availability realtime or find a better way to calculate distances...there's no limit!!!
-
---- 
-
-
-## **Project Main Stack**
-
-- [Requests](https://requests.readthedocs.io/)
-
-- [Pandas](https://pandas.pydata.org/pandas-docs/stable/reference/index.html)
-
-- Module `geo_calculations.py`
-
-- [Argparse](https://docs.python.org/3.9/library/argparse.html)
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
- 
+> Here you have some tools and references:
+- [Make a README](https://www.makeareadme.com/)
+- [Awesome README](https://github.com/matiassingers/awesome-readme)
+- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
