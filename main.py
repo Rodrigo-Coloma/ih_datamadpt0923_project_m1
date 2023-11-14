@@ -1,43 +1,59 @@
 # import library
-import modules.dataset_creation as dc
+import modules.dataframe_creation as dc
 import modules.main_operations as mo
-import modules.geo_calculations as gc
-import pandas as pd
+import modules.route_generator as rg
+import modules.map_generator as mg
+from datetime import datetime
 import argparse
-  
+import time
+import os
+start = time.time()
 
 # Argument parser function
 
 def terminal_input():
     parser = argparse.ArgumentParser(description= 'Application for BICImad localization' )
-    help_all ='If you include this flag a dataframe with the nearest BiciMAD station will be added for eaach pint of interest in the dataset' 
+    help_all ='If you include this flag a dataframe with the nearest BiciMAD station will be added for each point of interest in the dataset' 
     parser.add_argument('-a', '--all', action='store_true', help=help_all)
-    help_name = ''
-    parser.add_argument('-n','--name', action='store_true', help=help_name)
+    help_route ='This flag lets you create a custom route and generates a map with relevant information' 
+    parser.add_argument('-r', '--route', action='store_true', help=help_route)
+    help_email ='This flag lets will send the generated information into the given mail'
+    parser.add_argument('-e', '--email', action='store_true', help=help_email)
     args = parser.parse_args()
     return args
 
 def main():
-
-    # Inputs
-
-    interest_url = '/catalogo/300356-0-monumentos-ciudad-madrid.json'
-    bicimad_path = './data/origin/bicimad_stations.csv'
-    bicipark_path = './data/origin/bicipark_stations.csv' 
-    places = ['Abstracta II']
     
+    #Inputs
+
+    output_folder = str(datetime.now()).split('.')[0].replace(':', '').replace(' ','_')
+    os.mkdir(f'./data/output/{output_folder}')
+    if terminal_input().email:
+        mail = input('Enter an email to send the route information :')
+
     #Pipeline
 
-    interest_point_df = dc.interest_points(interest_url)
-    bicimad_df = dc.bicimad(bicimad_path)
-    if terminal_input().all:
-        places = interest_point_df['title']
-    elif terminal_input().name:
-        places = [x.strip() for x in input('Enter the name/names of the monuments you are visiting separated by commas: ').split(',')]         
-    nearest_df = pd.concat([mo.nearest(interest_point_df,bicimad_df, place) for place in places],axis=1)
-    nearest_df.to_csv('./data/output/'+ '1_all_' * terminal_input().all + 'nearest_stations.csv')
+    interest_points_df = dc.interest_points()
+    bicimad_df = dc.bicimad()
+    all_places_df =mo.nearest(interest_points_df, bicimad_df)
+    if terminal_input().route:
+        route_df = mo.route(all_places_df, output_folder, terminal_input().route)
+        stops_coordinates = rg.stations_coordinates(route_df,bicimad_df)
+        if len(stops_coordinates) > 3:
+            optimized_stop_coordinates = rg.route_optimizer(stops_coordinates)
+        else:
+            optimized_stop_coordinates = stops_coordinates
+        route_coordinates = rg.route_generator(optimized_stop_coordinates)
+        mg.mapGen(route_coordinates,optimized_stop_coordinates,interest_points_df,route_df,output_folder)
 
-# Pipeline execution
+    elif not terminal_input().all:
+        mo.route(all_places_df, output_folder)
+    
+
+# Pipeline execution 
 
 if __name__ == '__main__':
     main()
+    end = time.time()
+    print(end - start)
+# Example input: puerta alcala, dnoec, fuente cibeles, Abstracta
