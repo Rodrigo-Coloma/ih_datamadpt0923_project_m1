@@ -5,10 +5,24 @@ from dotenv import dotenv_values
 emt_email = dotenv_values('./.env')['EMT_EMAIL']
 emt_password = dotenv_values('./.env')['EMT_PASSWORD']
 
-def interest_points():
+
+def interest_points(route):
     base_url = 'https://datos.madrid.es/egob'
     url = '/catalogo/300356-0-monumentos-ciudad-madrid.json'
     df = pd.json_normalize(requests.get(base_url + url).json()['@graph'])
+    if route: 
+        start= pd.Series({'@id':'', 'id':'', 'title':'Starting location', 'relation':'', 'references':'', 'address.district.@id':'',
+       'address.locality':'', 'address.postal-code':'', 'address.street-address':route[0],
+       'location.latitude': float(route[1][0]), 'location.longitude': float(route[1][1]),
+       'organization.organization-desc':'', 'organization.organization-name':'',
+       'address.area.@id':''})
+        stop= pd.Series({'@id':'', 'id':'', 'title':'Finish location', 'relation':'', 'references':'', 'address.district.@id':'',
+       'address.locality':'', 'address.postal-code':'', 'address.street-address':route[2],
+       'location.latitude': float(route[3][0]), 'location.longitude': float(route[3][1]),
+       'organization.organization-desc':'', 'organization.organization-name':'',
+       'address.area.@id':''})
+        df = pd.concat([start.to_frame().T,df,stop.to_frame().T], axis=0).reset_index(drop=True)        
+        df[['location.latitude','location.longitude']] = df[['location.latitude','location.longitude']].astype(float)
     print('Interest points dataframe created')
     return df
 

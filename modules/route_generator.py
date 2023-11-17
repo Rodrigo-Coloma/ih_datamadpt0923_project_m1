@@ -8,6 +8,35 @@ def stations_coordinates(df1,df2):
     longitudes = [df2.loc[df2['BiciMAD station'] == station,['longitude']].iloc[0,0] for station in stations]
     return list(zip(latitudes,longitudes))
 
+def start_end(start_end):
+  route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes' 
+  token_gmap = dotenv_values('./.env')['CLAVE_GMAP']
+
+  data={"origin":{ "address": start_end[0]}, 
+    "destination":{ "address": start_end[1]},
+    "travelMode": "TRANSIT",
+    "languageCode": "en-US",
+    "units": "IMPERIAL"
+  }
+  headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline'}
+
+  response = requests.post(route_url, headers=headers, json=data)
+  if response.status_code == 200:
+    coordinates = decode(response.json()['routes'][0]['polyline']['encodedPolyline'])
+    return [start_end[0]] + [coordinates[0]] + [start_end[1]] + [coordinates[-1]]
+  else:
+    print('Addresses for starting or finishing weren not valid')
+
+def arg_parser(route,start,end):
+  if route:
+    if not start:
+      start = input("Enter the address for your rout's starting p0int: ")
+    if not end:
+      start = input("Enter the address for your rout's finishing p0int: ")
+    return (start, end)
+    
+
+
 def route_optimizer(coordinates):
   route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes'
   token_gmap = dotenv_values('./.env')['CLAVE_GMAP'] 
@@ -33,7 +62,7 @@ def route_optimizer(coordinates):
     "languageCode": "en-US",
     "units": "IMPERIAL"
   } 
-  data['intermediates'] = [{'location':{'latLng':{'latitude': coordinates[i][0],'longitude': coordinates[i][0]}}} for i in range(1,len(coordinates)-1)]
+  data['intermediates'] = [{'location':{'latLng':{'latitude': coordinates[i][0],'longitude': coordinates[i][1]}}} for i in range(1,len(coordinates)-1)]
   headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'routes.optimizedIntermediateWaypointIndex'}
 
   response = requests.post(route_url, headers=headers, json=data)

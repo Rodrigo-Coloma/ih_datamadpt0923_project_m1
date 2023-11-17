@@ -5,7 +5,7 @@ This pipeline's goal is to  help you navigate through Madrid's MADness with one 
 Alpha
 
 ### :running: **One-liner**
-With this pipeline you will be able to locate the **nearest BiciMAD station** from any **monument**.
+This app will help you locate nearest **nearest BiciMAD station** from any **monument** and create a visiting plan for the **choosen monuments** in the form of an **interactive map**
 
 ![Image](https://upload.wikimedia.org/wikipedia/commons/c/cf/Cincinnati_Bike_Maps_04.jpg)
 

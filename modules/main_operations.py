@@ -18,7 +18,8 @@ def fuzzy_check(str,places):
     else:
         print(f"{str} doesn't match any monument in the database")
 
-def nearest(places, bicimad):
+def nearest(places, bicimad,folder):
+    bicimad = bicimad.loc[bicimad['Available bikes']>0,:]
     data_list = []
     places_lat_rad = np.radians(places['location.latitude'].to_numpy())
     places_lon_rad = np.radians(places['location.longitude'].to_numpy())
@@ -47,19 +48,26 @@ def nearest(places, bicimad):
         min_distance = round(distance_matrix[station_index, x], 2)
         data_list.append({"Place of interest": place,'Type of place': type_of_place, "Place address": place_address, "BiciMAD station": station, "Station location": station_address, 'Available bikes': available_bikes, 'Available docks': available_docks, "distance": min_distance})
     df = pd.DataFrame(data_list).set_index('Place of interest')
-    df.to_csv('./data/output/1_all_nearest_stations.csv')
+    df.iloc[1:-1,:].to_csv(f'./data/output/{folder}/1_all_nearest_stations.csv')
     return df
     
-def route(df,path,route):
+def route(df,path,places):
     start = True
-    while start:
-        places = input("Write the places you want to visit separated by comas: ").split(',')
-        target_places = [fuzzy_check(place,df.index) for place in places]
+    if not places:
+        while start:
+            places = input("Write the places you want to visit separated by comas: ").split(',')
+            target_places = [fuzzy_check(place,df.index) for place in places]
+            target_places = [place for place in target_places if place != None]
+            if len(target_places)> 0:
+                start = False
+            else:
+                print('Please, enter at least 1 valid location')
+    else:
+        target_places = [fuzzy_check(place,df.index) for place in places.split(',')]
         target_places = [place for place in target_places if place != None]
-        if len(target_places) - route > 0:
-            start = False
-        else:
-            print('Please, enter at least 1 valid location (2 if using route mode)')
+        if len(target_places) < 1:
+            print('Please, enter at least 1 valid location')
+    target_places = [df.index[0]] + target_places + [df.index[-1]]
     df = df.loc[target_places,:]
     df.to_csv(f'./data/output/{path}/nearest_stations_database.csv')
     display(df)
