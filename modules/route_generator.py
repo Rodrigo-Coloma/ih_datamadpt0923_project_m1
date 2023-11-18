@@ -1,6 +1,7 @@
 import requests
 from dotenv import dotenv_values
 from polyline import decode
+from modules.argparser import termArgs
 
 def stations_coordinates(df1,df2):
     stations = list(df1['BiciMAD station'])
@@ -35,7 +36,7 @@ def arg_parser(route,start,end):
       start = input("Enter the address for your rout's finishing p0int: ")
     return (start, end)
     
-
+start_stop = start_end(arg_parser(termArgs().route,termArgs().start,termArgs().finish))
 
 def route_optimizer(coordinates):
   route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes'

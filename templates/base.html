@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>This is a sample tittle</title>
+    <style>
+        .message {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f3f3
+        }
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Monuments route planner</a>
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %} 
+        <form method="Post" action="{{ url_for('index') }}" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+              <input type="checkbox" class="form-check-input", name="send">
+              <label class="form-check-label" for="exampleCheck1" name="send">Send me the information by mail</label>
+            </div>
+            <div class="form-group">
+              <label for="examleImputStart">Starting address</label>
+              <input type="address" class="form-control" name="start" placeholder="Starting adresss">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputstop">Finishing address</label>
+                <input type="address" class="form-control" name="finish" placeholder="Finishing address">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Monuments to visit</label>
+                <input type="string" class="form-control" name="monuments" placeholder="Monument1, monument2, ....">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        {% endblock %}
+    </div>
+</body>
+</html>

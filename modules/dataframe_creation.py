@@ -2,9 +2,6 @@ import pandas as pd
 import requests
 from dotenv import dotenv_values
 
-emt_email = dotenv_values('./.env')['EMT_EMAIL']
-emt_password = dotenv_values('./.env')['EMT_PASSWORD']
-
 
 def interest_points(route):
     base_url = 'https://datos.madrid.es/egob'
@@ -27,6 +24,8 @@ def interest_points(route):
     return df
 
 def bicimad():
+    emt_email = dotenv_values('./.env')['EMT_EMAIL']
+    emt_password = dotenv_values('./.env')['EMT_PASSWORD']
     login_url = 'https://openapi.emtmadrid.es/v1/mobilitylabs/user/login/'
     login_headers = {'email': emt_email, 'password': emt_password}
     login_response = requests.get(login_url,headers=login_headers)

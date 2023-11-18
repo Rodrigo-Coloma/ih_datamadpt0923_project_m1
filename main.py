@@ -1,20 +1,28 @@
-# import library
+import time
+start = time.time()
 from modules.argparser import termArgs
 import modules.dataframe_creation as dc
 import modules.main_operations as mo
 import modules.route_generator as rg
 import modules.map_generator as mg
 from datetime import datetime
-import time
 import os
-start = time.time()
+from flask import Flask
+
+app = Flask(__name__)
+@app.route('/')
+def index():
+    return 'Hello World'
 
 def main():
     
     #Inputs
     folder = str(datetime.now()).split('.')[0].replace(':', '').replace(' ','_')
     os.mkdir(f'./data/output/{folder}')
-    start_stop = rg.start_end(rg.arg_parser(termArgs().route,termArgs().start,termArgs().finish))
+    if termArgs().route and termArgs().start and termArgs().finish:
+        start_stop = rg.start_end(rg.arg_parser(termArgs().route,termArgs().start,termArgs().finish))
+    else:
+        start_stop = False
     if termArgs().email:
         mail = input('Enter an email to send the route information :')
 

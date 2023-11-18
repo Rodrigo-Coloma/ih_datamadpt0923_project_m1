@@ -55,13 +55,11 @@ Parameters, return values, known issues, thrown errors.
     ├── __trash__
     ├── .gitignore
     ├── .env
-    ├── requeriments.txt
     ├── README.md
     ├── main_script.py
     ├── notebooks
-    │   ├── notebook1.ipynb
-    │   └── notebook2.ipynb
-    ├── package1
+    │   ├── dev_notebook.ipynb
+    ├── modules
     │   ├── module1.py
     │   └── module2.py
     └── data
