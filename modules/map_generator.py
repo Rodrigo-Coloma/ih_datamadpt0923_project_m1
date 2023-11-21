@@ -25,7 +25,7 @@ def nearby(lat,lon,type):
 
 
 
-def mapGen(route, stops, interest, route_df, path):
+def mapGen(route, stops, interest, route_df):
     m = folium.Map(location=[stops[0][0], stops[0][1]], zoom_start=14)
     folium.PolyLine(route).add_to(m)
     lat_stops = [i[0] for i in stops]
@@ -44,7 +44,7 @@ def mapGen(route, stops, interest, route_df, path):
             icon_image = mpimg.imread('./data/origin/camera_icon.png')
             for lat, lon, uri, name, type in zip(places['location.latitude'], places['location.longitude'], places['websiteUri'], places['displayName.text'],places['primaryTypeDisplayName.text']):
                 icon = folium.CustomIcon(icon_image, icon_size=(28, 28))
-                popup = folium.Popup(f'<h3><a href={uri}>{name} </a></h3><h4>{type}</h4>', min_width=300, max_width=300)
+                popup = folium.Popup(f'<h3><a href={uri} target="_blank">{name} </a></h3><h4>{type}</h4>', min_width=300, max_width=300)
                 folium.Marker(location=[lat,lon], icon=icon, popup=popup).add_to(m)
         except:
             pass
@@ -57,7 +57,7 @@ def mapGen(route, stops, interest, route_df, path):
             icon_image = mpimg.imread('./data/origin/restaurant_icon.png')
             for lat, lon, uri, name, type, rating, votes in zip(restaurants['location.latitude'], restaurants['location.longitude'], restaurants['websiteUri'], restaurants['displayName.text'],restaurants['primaryTypeDisplayName.text'],restaurants['rating'],restaurants['userRatingCount']):
                 icon = folium.CustomIcon(icon_image, icon_size=(28, 28))
-                popup = folium.Popup(f'<h3><a href={uri}>{name} </a></h3><h4>{type}<br>Rating: {rating}/5 ({votes} votes)</h4>', min_width=300, max_width=300)
+                popup = folium.Popup(f'<h3><a href={uri} target="_blank">{name}</a></h3><h4>{type}<br>Rating: {rating}/5 ({votes} votes)</h4>', min_width=300, max_width=300)
                 folium.Marker(location=[lat,lon], icon=icon, popup=popup).add_to(m)
         except:
             pass
@@ -72,12 +72,12 @@ def mapGen(route, stops, interest, route_df, path):
     icon_image = mpimg.imread('./data/origin/monument_icon.png')
     for lat, lon, name, link in zip(target_df['location.latitude'][1:-1], target_df['location.longitude'][1:-1],target_df.index[1:-1],target_df['relation'][1:-1]):
         icon = folium.CustomIcon(icon_image, icon_size=(48, 48))
-        popup = folium.Popup(f'<h3 style="color: #5e9ca0;"><a href={link}>{name} </a></h3>', min_width=300, max_width=300)
+        popup = folium.Popup(f'<h3 style="color: #5e9ca0;"><a href={link} target="_blank">{name} </a></h3>', min_width=300, max_width=300)
         folium.Marker(location=[lat,lon], icon=icon, popup=popup).add_to(m)
     icon_image = mpimg.imread('./data/origin/stop_icon.png')
     icon = folium.CustomIcon(icon_image, icon_size=(48, 48))
     popup = folium.Popup(f'<h3 style="color: #5e9ca0;">{target_df.index[-1]} </a></h3>', min_width=300, max_width=300)
     folium.Marker(location=[target_df['location.latitude'][-1],target_df['location.longitude'][-1]], icon=icon, popup=popup).add_to(m)
     icon_image = mpimg.imread('./data/origin/monument_icon.png')
-    m.save(f'./data/output/{path}/route_map.html')
-    webbrowser.open('file://' + os.path.realpath(f'./data/output/{path}/route_map.html'))
+    m.save(f'./templates/route_map.html')
+    webbrowser.open('file://' + os.path.realpath(f'./templates/route_map.html'))

@@ -13,6 +13,6 @@ def termArgs():
     help_places ='A string with all the monuments you want to visit separated by commas' 
     parser.add_argument('-p', '--places', type=str, help=help_places)
     help_email ='This flag lets will send the generated information into the given mail'
-    parser.add_argument('-e', '--email', action='store_true', help=help_email)
+    parser.add_argument('-e', '--email', type=str, help=help_email)
     args = parser.parse_args()
     return args

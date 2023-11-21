@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
-from IPython.display import display
 from datetime import datetime
+import os
 
 def interest_simplification(df):
     df['Type of place'] = 'Monument'
@@ -18,7 +18,7 @@ def fuzzy_check(str,places):
     else:
         print(f"{str} doesn't match any monument in the database")
 
-def nearest(places, bicimad,folder):
+def nearest(places, bicimad):
     bicimad = bicimad.loc[bicimad['Available bikes']>0,:]
     data_list = []
     places_lat_rad = np.radians(places['location.latitude'].to_numpy())
@@ -48,10 +48,10 @@ def nearest(places, bicimad,folder):
         min_distance = round(distance_matrix[station_index, x], 2)
         data_list.append({"Place of interest": place,'Type of place': type_of_place, "Place address": place_address, "BiciMAD station": station, "Station location": station_address, 'Available bikes': available_bikes, 'Available docks': available_docks, "distance": min_distance})
     df = pd.DataFrame(data_list).set_index('Place of interest')
-    df.iloc[1:-1,:].to_csv(f'./data/output/{folder}/1_all_nearest_stations.csv')
+    df.iloc[1:-1,:].to_csv(f'./data/output/1_all_nearest_stations.csv')
     return df
     
-def route(df,path,places):
+def target(df,places,start_stop):
     start = True
     if not places:
         while start:
@@ -67,8 +67,11 @@ def route(df,path,places):
         target_places = [place for place in target_places if place != None]
         if len(target_places) < 1:
             print('Please, enter at least 1 valid location')
-    target_places = [df.index[0]] + target_places + [df.index[-1]]
+    if start_stop:
+        target_places = [df.index[0]] + target_places + [df.index[-1]]
     df = df.loc[target_places,:]
-    df.to_csv(f'./data/output/{path}/nearest_stations_database.csv')
-    display(df)
+    folder = str(datetime.now()).split('.')[0].replace(':', '').replace(' ','_')
+    os.mkdir(f'./data/output/{folder}')
+    df.to_csv(f'./data/output/{folder}/nearest_stations_database.csv')
+    print(df)
     return df

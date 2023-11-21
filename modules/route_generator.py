@@ -27,23 +27,23 @@ def start_end(start_end):
     return [start_end[0]] + [coordinates[0]] + [start_end[1]] + [coordinates[-1]]
   else:
     print('Addresses for starting or finishing weren not valid')
+    return False
 
 def arg_parser(route,start,end):
   if route:
     if not start:
-      start = input("Enter the address for your rout's starting p0int: ")
+      start = input("Enter the address for your rout's starting point: ")
     if not end:
-      start = input("Enter the address for your rout's finishing p0int: ")
+      start = input("Enter the address for your rout's finishing point: ")
     return (start, end)
-    
-start_stop = start_end(arg_parser(termArgs().route,termArgs().start,termArgs().finish))
 
 def route_optimizer(coordinates):
-  route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes'
-  token_gmap = dotenv_values('./.env')['CLAVE_GMAP'] 
+  if len(coordinates) > 3:
+    route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes'
+    token_gmap = dotenv_values('./.env')['CLAVE_GMAP'] 
   
-  data={"origin":{
-      "location":{
+    data={"origin":{
+        "location":{
         "latLng":{
           "latitude": coordinates[0][0],
           "longitude": coordinates[0][1]
@@ -62,13 +62,16 @@ def route_optimizer(coordinates):
     "travelMode": "DRIVE",
     "languageCode": "en-US",
     "units": "IMPERIAL"
-  } 
-  data['intermediates'] = [{'location':{'latLng':{'latitude': coordinates[i][0],'longitude': coordinates[i][1]}}} for i in range(1,len(coordinates)-1)]
-  headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'routes.optimizedIntermediateWaypointIndex'}
+    } 
+    data['intermediates'] = [{'location':{'latLng':{'latitude': coordinates[i][0],'longitude': coordinates[i][1]}}} for i in range(1,len(coordinates)-1)]
+    headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'routes.optimizedIntermediateWaypointIndex'}
 
-  response = requests.post(route_url, headers=headers, json=data)
-  indexes = [i+1 for i in response.json()['routes'][0]['optimizedIntermediateWaypointIndex']]
-  return [coordinates[0]] + [coordinates[i] for i in indexes] + [coordinates[-1]]
+    response = requests.post(route_url, headers=headers, json=data)
+    indexes = [i+1 for i in response.json()['routes'][0]['optimizedIntermediateWaypointIndex']]
+    return [coordinates[0]] + [coordinates[i] for i in indexes] + [coordinates[-1]]
+  else:
+    return coordinates
+  
 
 def section_generator(start,end):
   route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes' 
