@@ -1,14 +1,50 @@
 ### :raising_hand: **BiciMAD Planner** 
-This pipeline's goal is to  help you navigate through Madrid's MADness with one of the best transport options available for tourism, BiciMAD bicicles.
+This app's goal is to  help you navigate through Madrid's MADness with one of the best transport options available for tourism, BiciMAD bicicles.
 
 ### :baby: **Status**
 Alpha
 
 ### :running: **One-liner**
-This app will help you locate nearest **nearest BiciMAD station** from any **monument** and create a visiting plan for the **choosen monuments** in the form of an **interactive map**
+This app will help you locate nearest **nearest BiciMAD station** from any **monument** and create a visiting plan for the **choosen monuments** in the form of an **interactive map**.
 
-![Image](https://upload.wikimedia.org/wikipedia/commons/c/cf/Cincinnati_Bike_Maps_04.jpg)
+![Image](data/origin/Example_map.png)
 
+Give it a try on ![Link](https://tour-planner.fly.dev/)
+
+### :computer: **Technology stack**
+This app is hosted in a fly.io server as a docker container. The interface for uthe user is composed of a webapp made up with Flask library which executes a python script(main). Main libraries used are requests, pandas, numpy and folium
+
+### :wrench: **Configuration**
+For testing and personal usage you can use the link given above. To run the script in your own system just clone, create a virtual enviroment, install python and then just `pip install -r requirements.txt` on the project folder.
+
+### :file_folder: **Folder structure**
+```
+└── project
+    ├── __wip__
+    ├── .venv
+    └── data
+    │    ├── origin
+    │    └── output
+    ├── modules
+    │   ├── argparser.py
+    │   └── dataframe_creation.py
+    │   └── email_generator.py
+    │   └── main_operations.py
+    │   └── map_generator.py
+    │   └── route_generator.py
+    ├── notebooks
+    │   ├── dev_notebook.ipynb
+    ├── templates
+    ├── .dockerignore
+    ├── .env
+    ├── .gitignore
+    ├── Dockerfile
+    ├── install-docker.sh
+    ├── LICENSE
+    ├── main.py
+    ├── README.md
+    ├── requirements.txt
+    ├── webapp.py    
 ---
 
 ## **Formatting**
