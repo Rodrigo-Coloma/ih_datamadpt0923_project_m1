@@ -23,4 +23,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-#C:/Users/rjcol/miniconda3/envs/pm1/python.exe c:/Users/rjcol/ironhack/project/project_module_1/ih_datamadpt0923_project_m1/main.py -r -s "calle pez, 2" -f "Calle de tetuan" -p "fuente de cibeles, neptuno, Maestro alonso, La gloria y los pegasos, cabo naval, El vecino curioso" -e "rjcolgut@gmail.com"
+#C:/Users/rjcol/miniconda3/envs/pm1/python.exe c:/Users/rjcol/ironhack/project/project_module_1/ih_datamadpt0923_project_m1/main.py -r -s "callao" -f "Plaza de España" -p "fuente de cibeles, neptuno, Maestro alonso, La gloria y los pegasos, cabo naval, El vecino curioso" -e "rjcolgut@gmail.com"

@@ -1,27 +1,26 @@
-### :raising_hand: **BiciMAD Planner** 
-This app's goal is to  help you navigate through Madrid's MADness with one of the best transport options available for tourism, BiciMAD bicicles.
+# Monumental BiciMAD Tour Planner
 
-### :rocket: **Status**
-This is the first project for Mardrid Ironhack bootcamp.
+## :rocket: Status
+This is the first project for the Madrid Ironhack boot camp.
 
-### :running: **One-liner**
-This app will help you create a **personalized tour plan** based on a given starting and finishing location and some **monuments you want to visit**. It will ccreate an **interactive map** with information about the monument you want to visit and an **optimized route** between the bicimad stations with information about bike availability. For convenience, **other interest places and restaurants** have been added to the map
+## :running: One-liner
+Create a **personalized tour plan** based on the monuments you want to visit in Madrid. The app generates an **interactive map** with an optimized route between **BiciMAD** bicycle stations, including information on bike availability and nearby points of interest and restaurants.
 
-![Image](data/origin/Example_map.png)
+![Example Map](data/origin/Example_map.png)
 
 [Give it a try!](https://tour-planner.fly.dev/)
 
-### :computer: **Technology stack**
-This app is hosted in a fly.io server as a docker container. The interface for uthe user is composed of a webapp made up with Flask library which executes a python script(main). Main libraries used are requests, pandas, numpy and folium
+## :computer: Technology Stack
+Hosted on a [fly.io](https://fly.io/) server as a Docker container. The user interface is a Flask web app, with the main script written in Python. Key libraries include requests, pandas, numpy, and folium.
 
-### :boom: **Core technical concepts and inspiration**
-In this project I was asked to do something with Madrid's monuments dataset and BiciMAD's dataset. So my main idea was to create something that would help tourists combine both things, monuments and BiciMAD
+## :boom: Core Technical Concepts and Inspiration
+Utilizes Madrid's monuments dataset and BiciMAD's dataset to assist tourists in combining both elements seamlessly.
 
+## :wrench: Configuration
+For testing and personal usage, visit the provided [link](https://tour-planner.fly.dev/). To run the script locally, clone the repository, create a virtual environment, install Python, and run `pip install -r requirements.txt` in the project folder.
 
-### :wrench: **Configuration**
-For testing and personal usage you can use the link given above. To run the script in your own system just clone, create a virtual enviroment, install python and then just `pip install -r requirements.txt` on the project folder.
+## :file_folder: Folder Structure
 
-### :file_folder: **Folder structure**
 ```
 └── project
     ├── __wip__
@@ -48,5 +47,7 @@ For testing and personal usage you can use the link given above. To run the scri
     ├── main.py
     ├── README.md
     ├── requirements.txt
-    ├── webapp.py    
----
+    ├── webapp.py
+```
+## License
+[License](LICENSE.txt)

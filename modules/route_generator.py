@@ -10,20 +10,17 @@ def stations_coordinates(df1,df2):
     return list(zip(latitudes,longitudes))
 
 def start_end(start_end):
-  route_url = 'https://routes.googleapis.com/directions/v2:computeRoutes' 
+  text_url = 'https://places.googleapis.com/v1/places:searchText' 
   token_gmap = dotenv_values('./.env')['CLAVE_GMAP']
 
-  data={"origin":{ "address": start_end[0]}, 
-    "destination":{ "address": start_end[1]},
-    "travelMode": "TRANSIT",
-    "languageCode": "en-US",
-    "units": "IMPERIAL"
-  }
-  headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline'}
+  data_start={"textQuery" : f"{start_end[0]}"}
+  data_stop = {"textQuery" : f"{start_end[1]}"}
+  headers = {'Content-Type': 'application/json','X-Goog-Api-Key':f'{token_gmap}','X-Goog-FieldMask': 'places.location'}
 
-  response = requests.post(route_url, headers=headers, json=data)
-  if response.status_code == 200:
-    coordinates = decode(response.json()['routes'][0]['polyline']['encodedPolyline'])
+  sr = requests.post(text_url, headers=headers, json=data_start)
+  er = requests.post(text_url, headers=headers, json=data_stop)
+  if sr.status_code == 200 and er.status_code == 200:
+    coordinates = [(sr.json()['places'][0]['location']['latitude'],sr.json()['places'][0]['location']['longitude']),(er.json()['places'][0]['location']['latitude'],er.json()['places'][0]['location']['longitude'])]
     return [start_end[0]] + [coordinates[0]] + [start_end[1]] + [coordinates[-1]]
   else:
     print('Addresses for starting or finishing weren not valid')
