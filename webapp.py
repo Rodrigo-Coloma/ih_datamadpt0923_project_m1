@@ -9,10 +9,10 @@ app = Flask(__name__)
 @app.route('/',methods= ['POST','GET'])
 def index(name=None):
     if request.method == 'POST':
-        input = request.form
+        args = request.form
         if os.path.exists('./templates/route_map.html'):
             os.remove('./templates/route_map.html')
-        run(['python','./main.py', '-r','-e', f"{input['email']}", '-s', f"{input['start']}", '-f', f"{input['finish']}", '-p', f"{input['monuments']}"],capture_output=True,text=True)
+        run(['python','./main.py', '-r','-e', f"{args['email']}", '-s', f"{args['start']}", '-f', f"{args['finish']}", '-p', f"{args['monuments']}"],capture_output=True,text=True)
         try:
             return render_template('route_map.html',name=name)
         except:

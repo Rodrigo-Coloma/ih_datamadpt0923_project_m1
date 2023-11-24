@@ -1,7 +1,6 @@
 import requests
 from dotenv import dotenv_values
 from polyline import decode
-from modules.argparser import termArgs
 
 def stations_coordinates(df1,df2):
     stations = list(df1['BiciMAD station'])
